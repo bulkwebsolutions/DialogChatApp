@@ -25,11 +25,16 @@ export class LoginPage {
 
   navigateToPage(pageName: string) {
 
-    if (pageName === 'InboxPage') {
-      this.navCtrl.setRoot(pageName)
-    } else {
-      this.navCtrl.push(pageName)
-    }
+    // Shorter style
+    // if this equals true pageName === 'TabsPage'
+    // execute this.navCtrl.setRoot(pageName)
+    pageName === 'TabsPage' ? this.navCtrl.setRoot(pageName) : this.navCtrl.push(pageName);
+
+    // if (pageName === 'InboxPage') {
+    //   this.navCtrl.setRoot(pageName);
+    // } else {
+    //   this.navCtrl.push(pageName);
+    // }
 
 
   }
