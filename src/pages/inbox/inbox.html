@@ -17,12 +17,12 @@
 <ion-content padding>
 
   <ion-list>
-    <ion-item>
+    <ion-item *ngFor="let message of messageList">
       <ion-avatar item-left="">
 
       </ion-avatar>
-      <h2>Ale Knows</h2>
-      <p>Just added a static message</p>
+      <h2>{{ message.user.firstName + ' ' + message.user.lastName }}</h2>
+      <p>{{ message.lastMessage }}</p>
     </ion-item>
 
   </ion-list>
