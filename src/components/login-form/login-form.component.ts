@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { NavController } from "ionic-angular";
 import { AngularFireAuth } from "angularfire2/auth";
-import { Account } from "../../models/account/account.interface";
 import { ToastController } from "ionic-angular";
+
+import { Account } from "../../models/account/account.interface";
+import { LoginResponse } from "../../models/login/login-response.interface";
+
 
 /**
  * Generated class for the LoginFormComponent component.
@@ -17,31 +20,24 @@ import { ToastController } from "ionic-angular";
 export class LoginFormComponent {
 
   account = {} as Account;
+  @Output() loginStatus: EventEmitter<LoginResponse>
 
   constructor(private toast: ToastController,
               private afAuth: AngularFireAuth,
-              private navCtrl: NavController) {}
-
-  navigateToPage(pageName: string) {
-
-    // Shorter style
-    // if this equals true pageName === 'TabsPage'
-    // execute this.navCtrl.setRoot(pageName)
-    pageName === 'TabsPage' ? this.navCtrl.setRoot(pageName) : this.navCtrl.push(pageName);
-
-    // if (pageName === 'InboxPage') {
-    //   this.navCtrl.setRoot(pageName);
-    // } else {
-    //   this.navCtrl.push(pageName);
-    // }
-
-
+              private navCtrl: NavController) {
+    this.loginStatus = new EventEmitter<LoginResponse>();
   }
+
+
 
 
   async login() {
     try {
-      const result = await this.afAuth.auth.signInWithEmailAndPassword(this.account.email, this.account.password)
+      const result: LoginResponse = {
+        result: await this.afAuth.auth.signInWithEmailAndPassword(this.account.email, this.account.password)
+      }
+      this.loginStatus.emit(result);
+
       this.toast.create({
         message: 'Account Successfuly Created',
         duration: 3000
@@ -50,6 +46,15 @@ export class LoginFormComponent {
     }
     catch (e) {
       console.log(e);
+
+      const error: LoginResponse = {
+        error: e
+      }
+
+      this.loginStatus.emit(error);
+
+
+
       this.toast.create({
         message: e.message,
         duration: 3000
@@ -57,6 +62,11 @@ export class LoginFormComponent {
     }
 
   }
+
+  navigateToRegisterPage() {
+    this.navCtrl.push('RegisterPage')
+  }
+
 
 
 

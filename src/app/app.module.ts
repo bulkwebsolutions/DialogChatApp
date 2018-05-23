@@ -6,6 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { AngularFireModule } from "angularfire2";
 import { FIREBASE_CONFFIG } from "./firebase.credentials";
 import { MyApp } from './app.component';
+import { AuthProvider } from '../providers/auth/auth.service';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { MyApp } from './app.component';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    AuthProvider
   ]
 })
 export class AppModule {}
