@@ -28,10 +28,12 @@ export class LoginPage {
   login(event: LoginResponse) {
     console.log(event)
 
+    console.log('Test')
+
     if(!event.error){
 
       this.toast.create({
-        message: 'Welcome to ChatApp, ${event.result.email}',
+        message: 'Welcome to ChatApp',
         duration: 3000
       }).present();
 
